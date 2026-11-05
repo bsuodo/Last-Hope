@@ -22,7 +22,7 @@ kan denken.
 
 Ik wil matrixes leren dus hoe je die illusie kan geven en ook nog is de camera kan draaien.
 
-Alle assets zijn door mij gemaakt.
+Alle assets zijn door mij gemaakt ze vallen onder CC BY-NC-ND LICENCIE.
 
 Mijn werk process is als volgt:
   1. Bij elke sprint begin ik met een plan dat staat ook op trello.

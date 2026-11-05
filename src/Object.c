@@ -47,7 +47,7 @@ void RenderObject()
                 .h = 16
             };
 
-            for (int r = 0; r < 6; r++)
+            for (int r = 0; r < 12; r++)
             {
                 dst.y--;//plus kant 8 is max 2-4 is chill
                 SDL_RenderTextureRotated(Renderer, objects[c].texture, &src, &dst, objects[c].angle, NULL, SDL_FLIP_NONE);

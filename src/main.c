@@ -9,7 +9,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     Renderer = SDL_CreateRenderer(Window, NULL);
     
     LoadAssets();
-
+    
     CreateObject("doos_clone_ID_1", 400, 400, 10, GetTexture("box"));
 
     return SDL_APP_CONTINUE;
