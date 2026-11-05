@@ -13,6 +13,6 @@ Mijn werk process is als volgt:
   3. Vervolgens test ik hem zelf. Pas als ik echt de basis heb, laat ik andere mijn spel testen.
 
 Hier onder staan mijn gegevens:
-  -tijdsduur: 28 oktober 2026 t/m 4 oktober 2026.
+  -tijdsduur: 28 oktober 2026 t/m 4 november 2026.
   -studentnaam: A. Boutakmanti
   -studentnr: 97137087

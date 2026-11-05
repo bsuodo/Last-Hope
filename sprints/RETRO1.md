@@ -35,6 +35,6 @@ simpelweg gewoon geen effect had, maar vooral omdat het project nog klein is.
 project begon op 28 oktober 2026.
 
 Hier onder staan mijn gegevens:
-  -tijdsduur: 28 oktober 2026 t/m 4 oktober 2026.
+  -tijdsduur: 28 oktober 2026 t/m 4 november 2026.
   -studentnaam: A. Boutakmanti
   -studentnr: 97137087
