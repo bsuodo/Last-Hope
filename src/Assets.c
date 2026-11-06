@@ -1,17 +1,27 @@
 #include "Assets.h"
 
-// textures resource
-SDL_Texture** Texture_files;
-char** Texture_names;
-int Texture_size;
+int Texture_Buffer_Array_Size = 0;
+Texture_Buffer* Texture_Buffer_Array;
 
 void LoadAssets()
 {
     SDL_SetDefaultTextureScaleMode(Renderer, SDL_SCALEMODE_NEAREST);
 
-    Texture_files = SDL_malloc(0);
-    Texture_names = SDL_malloc(0);
-    Texture_size  = 0;
+    Texture_Buffer_Array = SDL_malloc(0);
+
+    FILE* JSON_Bestand = fopen("assets/textures.json", "r");
+
+    fseek(JSON_Bestand, 0, SEEK_END);
+    int JSON_Bestand_Size = ftell(JSON_Bestand);
+    fseek(JSON_Bestand, 0, SEEK_SET);
+
+    char JSON_Bestand_Contents[JSON_Bestand_Size+1];
+    JSON_Bestand_Contents[JSON_Bestand_Size] = '\0';
+
+    fread(JSON_Bestand_Contents, sizeof(char), JSON_Bestand_Size, JSON_Bestand);
+    cJSON *parser = cJSON_Parse(JSON_Bestand_Contents);
+
+    fclose(JSON_Bestand);
 
     DIR* searcher = opendir("assets/textures/");
     struct dirent* file;
@@ -22,35 +32,42 @@ void LoadAssets()
             continue;
 
         char* file_extension = strchr(file->d_name, '.') + 1;
-        if (!strcmp(file_extension, "png"))
+        if (file_extension != NULL && !strcmp(file_extension, "png"))
         {
+            // nieuwe texture buffer
+            Texture_Buffer_Array = SDL_realloc(Texture_Buffer_Array, (Texture_Buffer_Array_Size+1)*sizeof(Texture_Buffer));
+
+            // naam
             int naam_lengte = (strlen(file->d_name) - 4);
+            Texture_Buffer_Array[Texture_Buffer_Array_Size].naam = SDL_malloc(naam_lengte+1);
+            strncpy(Texture_Buffer_Array[Texture_Buffer_Array_Size].naam, file->d_name, naam_lengte);
+            Texture_Buffer_Array[Texture_Buffer_Array_Size].naam[naam_lengte] = '\0';
 
-            Texture_files               = SDL_realloc(Texture_files, (Texture_size+1)*sizeof(SDL_Texture*));
-            Texture_names               = SDL_realloc(Texture_names, (Texture_size+1)*sizeof(char*));
-            Texture_names[Texture_size] = SDL_malloc (naam_lengte+1                  *sizeof(char));
-
-            char file_path[1024];
-
+            // texture
+            char file_path[1024] = {0};
             strcpy(file_path, "assets/textures/");
             strcat(file_path, file->d_name);
-            Texture_files[Texture_size] = IMG_LoadTexture(Renderer, file_path);
+            Texture_Buffer_Array[Texture_Buffer_Array_Size].texture = IMG_LoadTexture(Renderer, file_path);
 
-            strncpy(Texture_names[Texture_size], file->d_name, naam_lengte);
-            Texture_names[Texture_size][naam_lengte] = '\0';
+            // x, y, z, do make it better
+            cJSON* JSON_Finder = cJSON_GetObjectItemCaseSensitive(parser, Texture_Buffer_Array[Texture_Buffer_Array_Size].naam);
+            Texture_Buffer_Array[Texture_Buffer_Array_Size].w = (char)cJSON_GetNumberValue(cJSON_GetArrayItem(JSON_Finder, 0));
+            Texture_Buffer_Array[Texture_Buffer_Array_Size].h = (char)cJSON_GetNumberValue(cJSON_GetArrayItem(JSON_Finder, 1));
+            Texture_Buffer_Array[Texture_Buffer_Array_Size].z = (char)cJSON_GetNumberValue(cJSON_GetArrayItem(JSON_Finder, 2));
 
-            Texture_size++;
-
-            SDL_Log(SDL_GetError());
+            Texture_Buffer_Array_Size++;
         }
     }
+
+    closedir(searcher);
+    cJSON_Delete(parser);
 }
 
-SDL_Texture* GetTexture(char* texture_name)
+Texture_Buffer* GetTextureBuffer(char* texture_name)
 {
-    for (int c = 0; c < Texture_size; c++)
+    for (int c = 0; c < Texture_Buffer_Array_Size; c++)
     {
-        if (strcmp(texture_name, Texture_names[c]) == 0) return Texture_files[c];
+        if (strcmp(Texture_Buffer_Array[c].naam, texture_name) == 0) return &Texture_Buffer_Array[c];
     }
 
     return NULL;

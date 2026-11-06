@@ -1,16 +1,18 @@
-#include "Engine.h"
+#include "Object.h"
 
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
-    Window = SDL_CreateWindow("Last Hope", 1280, 768, 0);
+    Window = SDL_CreateWindow("Last Hope", 1280, 768, SDL_WINDOW_HIDDEN);
     Renderer = SDL_CreateRenderer(Window, NULL);
     
-    LoadAssets();
+    LoadAssets(); // return false means not valid textures.json or maybe textures file png
     
-    CreateObject("doos_clone_ID_1", 400, 400, 10, GetTexture("box"));
+    CreateObject("doos_clone_ID_1", 100, 100, 10, GetTextureBuffer("box"));
+
+    SDL_ShowWindow(Window);
 
     return SDL_APP_CONTINUE;
 }

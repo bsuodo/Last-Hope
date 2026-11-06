@@ -3,7 +3,13 @@
 
 #include "Engine.h"
 
+typedef struct Texture_Buffer {
+    SDL_Texture* texture;
+    int w, h, z;
+    char* naam;
+} Texture_Buffer;
+
 void LoadAssets();
-SDL_Texture* GetTexture(char* texture_name);
+Texture_Buffer* GetTextureBuffer(char* texture_name);
 
 #endif//ASSETS_H

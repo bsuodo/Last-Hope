@@ -5,9 +5,9 @@
 #include <SDL3_image/SDL_image.h>
 
 #include <dirent.h>
+#include <stdio.h>
 
-#include "Assets.h"
-#include "Object.h"
+#include <cJSON.h>
 
 extern SDL_Window *Window;
 extern SDL_Renderer *Renderer;
