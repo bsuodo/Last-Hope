@@ -5,8 +5,6 @@ Texture_Buffer* Texture_Buffer_Array;
 
 void LoadAssets()
 {
-    SDL_SetDefaultTextureScaleMode(Renderer, SDL_SCALEMODE_NEAREST);
-
     Texture_Buffer_Array = SDL_malloc(0);
 
     FILE* JSON_Bestand = fopen("assets/textures.json", "r");

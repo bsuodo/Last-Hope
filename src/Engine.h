@@ -12,4 +12,6 @@
 extern SDL_Window *Window;
 extern SDL_Renderer *Renderer;
 
+void EngineInit();
+
 #endif//ENGINE_H

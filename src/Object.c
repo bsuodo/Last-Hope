@@ -47,7 +47,7 @@ void RenderObject()
                 .h = objects[c].texture_buffer->h
             };
 
-            for (int r = 0; r < 6; r++)
+            for (int r = 0; r < objects[c].scale; r++)
             {
                 dst.y--;
                 SDL_RenderTextureRotated(Renderer, objects[c].texture_buffer->texture, &src, &dst, objects[c].angle, NULL, SDL_FLIP_NONE);
@@ -55,5 +55,6 @@ void RenderObject()
         }
 
     }
-    objects[0].angle+=0.1;
+    objects[0].angle+=0.1; // voeg in rotate object en dan naam met en NULL boolean als het is gevonden;
+    objects[1].angle+=0.1; // IDEM
 }
